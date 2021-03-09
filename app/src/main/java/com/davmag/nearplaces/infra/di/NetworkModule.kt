@@ -2,19 +2,14 @@ package com.davmag.nearplaces.infra.di
 
 import com.davmag.nearplaces.BuildConfig
 import com.davmag.nearplaces.data.source.remote.api.PlacesApi
-import com.davmag.nearplaces.infra.util.GsonDateTimeTypeAdapter
-import com.davmag.nearplaces.infra.util.GsonSimpleDateTypeAdapter
-import com.davmag.nearplaces.domain.repository.scheduler.AppSchedulers
+import com.davmag.nearplaces.data.repository.scheduler.AppSchedulers
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.threeten.bp.LocalDate
-import org.threeten.bp.OffsetDateTime
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

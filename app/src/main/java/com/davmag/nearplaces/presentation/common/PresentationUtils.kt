@@ -20,26 +20,23 @@ object PresentationUtils {
         exceptionHandler : (Throwable) -> ExceptionWrapper = { ExceptionWrapper(it) }
     ) {
         val source = toLiveData(
-            flowable.observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    PresentationWrapper(
-                        if(it == null || (it is List<*> && it.isNotEmpty()))
-                            PresentationObject.VIEWTYPE_CONTENT else PresentationObject.VIEWTYPE_EMPTY,
-                        it
-                    ) as PresentationObject
+            flowable.map {
+                PresentationWrapper(
+                    if(it == null || (it is List<*> && it.isNotEmpty()))
+                        PresentationObject.VIEWTYPE_CONTENT else PresentationObject.VIEWTYPE_EMPTY,
+                    it
+                ) as PresentationObject
+            }.onErrorReturn {
+                Timber.e(it)
+                exceptionHandler(it)
+            }.map {
+                if(it is ExceptionWrapper && mediatorFailure != null){
+                    mediatorFailure.postValue(it)
                 }
-                .onErrorReturn {
-                    Timber.e(it)
-                    exceptionHandler(it)
+                else {
+                    mediator.postValue(it)
                 }
-                .map {
-                    if(it is ExceptionWrapper && mediatorFailure != null){
-                        mediatorFailure.postValue(it)
-                    }
-                    else {
-                        mediator.postValue(it)
-                    }
-                }
+            }
         )
 
         mediator.addSource(source){
@@ -94,9 +91,7 @@ object PresentationUtils {
         mediator : MediatorLiveData<T>? = null,
         removeAfterFirst: Boolean = false
     ) : LiveData<T> {
-        val source = LiveDataReactiveStreams.fromPublisher(
-            flowable.observeOn(AndroidSchedulers.mainThread())
-        )
+        val source = LiveDataReactiveStreams.fromPublisher(flowable)
 
         mediator?.addSource(source) {
             mediator.postValue(it)

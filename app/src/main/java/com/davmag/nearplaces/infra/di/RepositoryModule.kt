@@ -4,9 +4,9 @@ import com.davmag.nearplaces.data.source.local.contract.LocationLocalDatasource
 import com.davmag.nearplaces.data.source.local.contract.PlaceLocalDatasource
 import com.davmag.nearplaces.data.source.local.contract.UserContextLocalDatasource
 import com.davmag.nearplaces.data.source.remote.contract.PlaceRemoteDatasource
-import com.davmag.nearplaces.data.source.repository.PlaceRepositoryImpl
+import com.davmag.nearplaces.data.repository.PlaceRepositoryImpl
 import com.davmag.nearplaces.domain.repository.PlaceRepository
-import com.davmag.nearplaces.domain.repository.scheduler.AppSchedulers
+import com.davmag.nearplaces.data.repository.scheduler.AppSchedulers
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

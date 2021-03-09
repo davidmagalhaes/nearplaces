@@ -1,7 +1,7 @@
 package com.davmag.nearplaces.infra.di
 
-import com.davmag.nearplaces.infra.util.AppSchedulersImpl
-import com.davmag.nearplaces.domain.repository.scheduler.AppSchedulers
+import com.davmag.nearplaces.data.repository.scheduler.AppSchedulersImpl
+import com.davmag.nearplaces.data.repository.scheduler.AppSchedulers
 import com.davmag.nearplaces.infra.util.GsonDateTimeTypeAdapter
 import com.davmag.nearplaces.infra.util.GsonSimpleDateTypeAdapter
 import com.google.gson.GsonBuilder

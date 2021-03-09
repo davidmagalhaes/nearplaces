@@ -1,4 +1,4 @@
-package com.davmag.nearplaces.data.source.repository
+package com.davmag.nearplaces.data.repository
 
 import androidx.paging.*
 import androidx.paging.rxjava2.cachedIn
@@ -6,12 +6,13 @@ import androidx.paging.rxjava2.flowable
 import com.davmag.nearplaces.data.source.local.contract.LocationLocalDatasource
 import com.davmag.nearplaces.data.source.local.contract.PlaceLocalDatasource
 import com.davmag.nearplaces.data.source.local.contract.UserContextLocalDatasource
-import com.davmag.nearplaces.data.source.local.util.SimpleRemoteMediator
+import com.davmag.nearplaces.data.source.remote.util.SimpleRemoteMediator
 import com.davmag.nearplaces.data.source.remote.contract.PlaceRemoteDatasource
 import com.davmag.nearplaces.data.source.remote.contract.PlaceType
 import com.davmag.nearplaces.domain.model.Place
 import com.davmag.nearplaces.domain.repository.PlaceRepository
-import com.davmag.nearplaces.domain.repository.scheduler.AppSchedulers
+import com.davmag.nearplaces.data.repository.scheduler.AppSchedulers
+import com.davmag.nearplaces.domain.aggregate.PlaceSearchResult
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -56,6 +57,8 @@ class PlaceRepositoryImpl(
             },
             placeLocalDatasource.get().asPagingSourceFactory(),
         ).flowable.cachedIn(GlobalScope)
+            .observeOn(appSchedulers.database())
+            .subscribeOn(appSchedulers.main())
     }
 
     override fun fetch(
@@ -64,9 +67,12 @@ class PlaceRepositoryImpl(
         fetchNextPage : Boolean
     ): Maybe<List<Place>> {
         return locationLocalDatasource.get()
+            .observeOn(appSchedulers.database())
+            .subscribeOn(appSchedulers.main())
             .firstElement()
             .flatMap { locationList ->
                 val location = locationList.first()
+                val resultList = arrayListOf<PlaceSearchResult>()
 
                 userContextLocalDatasource.single()
                     .flatMap { userContext ->
@@ -78,7 +84,8 @@ class PlaceRepositoryImpl(
                             openNow = openNow,
                             pageToken = userContext.restaurantPageToken
                                 .takeIf { fetchNextPage }
-                        ).mergeWith (
+                        ).flatMap {
+                            resultList.add(it)
                             placeRemoteDatasource.fetch(
                                 longitude = location.longitude,
                                 latitude = location.latitude,
@@ -88,7 +95,8 @@ class PlaceRepositoryImpl(
                                 pageToken = userContext.barPageToken
                                     .takeIf { fetchNextPage }
                             )
-                        ).mergeWith (
+                        }.flatMap {
+                            resultList.add(it)
                             placeRemoteDatasource.fetch(
                                 longitude = location.longitude,
                                 latitude = location.latitude,
@@ -98,7 +106,10 @@ class PlaceRepositoryImpl(
                                 pageToken = userContext.cafePageToken
                                     .takeIf { fetchNextPage }
                             )
-                        ).toList().toMaybe()
+                        }.map {
+                            resultList.add(it)
+                            resultList
+                        }
                     }
             }
             .flatMap { fetchResults ->

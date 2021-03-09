@@ -1,4 +1,4 @@
-package com.davmag.nearplaces.data.source.local.util
+package com.davmag.nearplaces.data.source.remote.util
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType

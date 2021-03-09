@@ -1,14 +1,10 @@
 package com.davmag.nearplaces.infra.di
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
-import com.davmag.nearplaces.domain.repository.scheduler.AppSchedulers
-import com.davmag.nearplaces.infra.util.AppSchedulersImpl
 import com.davmag.nearplaces.data.source.local.LocalDatabase
 import com.orhanobut.hawk.DefaultHawkFacade
 import com.orhanobut.hawk.Hawk
-import com.orhanobut.hawk.HawkBuilder
 import com.orhanobut.hawk.HawkFacade
 import dagger.Module
 import dagger.Provides

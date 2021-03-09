@@ -1,6 +1,5 @@
-package com.davmag.nearplaces.infra.util
+package com.davmag.nearplaces.data.repository.scheduler
 
-import com.davmag.nearplaces.domain.repository.scheduler.AppSchedulers
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

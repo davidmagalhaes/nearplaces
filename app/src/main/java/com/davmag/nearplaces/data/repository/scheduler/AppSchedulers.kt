@@ -1,4 +1,4 @@
-package com.davmag.nearplaces.domain.repository.scheduler
+package com.davmag.nearplaces.data.repository.scheduler
 
 import io.reactivex.Scheduler
 
