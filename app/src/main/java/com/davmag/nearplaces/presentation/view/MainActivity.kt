@@ -1,15 +1,13 @@
 package com.davmag.nearplaces.presentation.view
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import com.davmag.nearplaces.R
 import com.davmag.nearplaces.databinding.ActivityMainBinding
 import com.davmag.nearplaces.presentation.adapter.PlaceAdapter
+import com.davmag.nearplaces.presentation.common.getErrorMessage
 import com.davmag.nearplaces.presentation.common.initViewModel
+import com.davmag.nearplaces.presentation.common.longToast
 import com.davmag.nearplaces.presentation.di.presentationComponent
 import com.davmag.nearplaces.presentation.viewmodel.MainViewModel
 import javax.inject.Inject
@@ -40,6 +38,10 @@ class MainActivity : AppCompatActivity() {
 
 		viewBinder.swipper.setOnRefreshListener {
 			viewModel.reload()
+		}
+
+		viewModel.error.observe(this){
+			longToast(getErrorMessage(it))
 		}
 
 		viewModel.places.observe(this) {

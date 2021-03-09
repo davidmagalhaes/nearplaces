@@ -19,12 +19,12 @@ fun Context.longToast(message : String?) {
     Toast.makeText(this, message.orEmpty(), Toast.LENGTH_LONG).show()
 }
 
-fun Context.getString(messageRes : Int?, vararg args : Any?) : String? {
+fun Context.getStringOrNull(messageRes : Int?, vararg args : Any?) : String? {
     return messageRes?.let { getString(it, *args) }
 }
 
-fun Context.getString(wrapper : ExceptionWrapper) : String? {
-    return getString(
+fun Context.getErrorMessage(wrapper : ExceptionWrapper) : String? {
+    return getStringOrNull(
         wrapper.errorMessage,
         *wrapper.errorArgs.toTypedArray()
     ) ?: wrapper.exception.message

@@ -2,6 +2,9 @@ package com.davmag.nearplaces.infra.di
 
 import android.app.Application
 import com.davmag.nearplaces.domain.repository.PlaceRepository
+import com.davmag.nearplaces.domain.usecase.FetchPlacesUseCase
+import com.davmag.nearplaces.domain.usecase.GetPlacesUseCase
+import com.davmag.nearplaces.domain.usecase.GetPlacesUseCaseImpl
 import com.davmag.nearplaces.infra.App
 import dagger.BindsInstance
 import dagger.Component
@@ -13,7 +16,8 @@ import javax.inject.Singleton
     PersistenceModule::class,
     NetworkModule::class,
     DatasourceModule::class,
-    RepositoryModule::class
+    RepositoryModule::class,
+    UseCaseRepository::class
 ])
 interface ApplicationComponent {
 
@@ -30,5 +34,6 @@ interface ApplicationComponent {
 
     fun inject(application : App)
 
-    fun placeRepository() : PlaceRepository
+    fun getPlacesUseCase() : GetPlacesUseCase
+    fun fetchPlacesUseCase(): FetchPlacesUseCase
 }
