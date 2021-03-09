@@ -1,6 +1,8 @@
 package com.davmag.nearplaces.presentation.di
 
 import com.davmag.nearplaces.domain.repository.PlaceRepository
+import com.davmag.nearplaces.domain.usecase.FetchPlacesUseCase
+import com.davmag.nearplaces.domain.usecase.GetPlacesUseCase
 import com.davmag.nearplaces.presentation.viewmodel.MainViewModel
 import dagger.Module
 import dagger.Provides
@@ -9,8 +11,10 @@ import dagger.Provides
 class ViewModelModule {
     @Provides
     fun provideMainViewModel(
-        placeRepository: PlaceRepository
+        getPlacesUseCase: GetPlacesUseCase,
+        fetchPlacesUseCase: FetchPlacesUseCase
     ) = MainViewModel(
-        placeRepository
+        getPlacesUseCase,
+        fetchPlacesUseCase
     )
 }

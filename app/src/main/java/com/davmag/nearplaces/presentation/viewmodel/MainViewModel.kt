@@ -6,6 +6,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.davmag.nearplaces.domain.repository.PlaceRepository
+import com.davmag.nearplaces.domain.usecase.FetchPlacesUseCase
+import com.davmag.nearplaces.domain.usecase.GetPlacesUseCase
 import com.davmag.nearplaces.presentation.common.BaseViewModel
 import com.davmag.nearplaces.presentation.common.ExceptionWrapper
 import com.davmag.nearplaces.presentation.common.launchOn
@@ -14,7 +16,8 @@ import com.davmag.nearplaces.presentation.mapper.PlacePresentationMapper
 import com.davmag.nearplaces.presentation.model.PlacePresentation
 
 class MainViewModel(
-    private val placeRepository: PlaceRepository
+    private val getPlacesUseCase: GetPlacesUseCase,
+    private val fetchPlacesUseCase: FetchPlacesUseCase
 ) : BaseViewModel() {
 
     private var _places = MediatorLiveData<PagingData<PlacePresentation>>()
@@ -27,7 +30,7 @@ class MainViewModel(
 
     override fun initViewModel(args : Bundle?){
         if(!initialized){
-            placeRepository.get()
+            getPlacesUseCase.execute()
                 .map { pagingData ->
                     pagingData.map {
                         PlacePresentationMapper.parse(it).first()
@@ -42,6 +45,6 @@ class MainViewModel(
     }
 
     fun reload(){
-        placeRepository.fetch().launchOn(_error)
+        fetchPlacesUseCase.execute().launchOn(_error)
     }
 }

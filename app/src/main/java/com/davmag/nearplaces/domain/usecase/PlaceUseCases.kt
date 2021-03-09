@@ -7,25 +7,25 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 
 interface GetPlacesUseCase {
-    fun get() : Flowable<PagingData<Place>>
+    fun execute() : Flowable<PagingData<Place>>
 }
 
 class GetPlacesUseCaseImpl(
     private val placeRepository: PlaceRepository
 ) : GetPlacesUseCase{
-    override fun get(): Flowable<PagingData<Place>> {
+    override fun execute(): Flowable<PagingData<Place>> {
         return placeRepository.get()
     }
 }
 
 interface FetchPlacesUseCase {
-    fun fetch() : Maybe<Any>
+    fun execute() : Maybe<Any>
 }
 
 class FetchPlaceUseCaseImpl(
     private val placeRepository: PlaceRepository
 ) : FetchPlacesUseCase{
-    override fun fetch(): Maybe<Any> {
+    override fun execute(): Maybe<Any> {
         return placeRepository.fetch(
 
         ).map { }
