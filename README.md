@@ -8,7 +8,8 @@ for the presentation layer.
 Conceptually, the architecture is as follows:
 
 ![AppArch](readmeres/clean_architecture_onion.png)
-
+\
+\
 
 When implemented, this architecture assumes the format of Clean Architecture on Android:
 ![AppArchAndroid](readmeres/clean_architecture_impl.png)
