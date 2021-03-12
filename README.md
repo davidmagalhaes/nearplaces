@@ -3,8 +3,7 @@
 An App project whose goal is to locate the user's nearest Cafes, Bars and Restaurants.
 
 ## Architecture
-The app architecture is based on Clean Architecture for the domain and data layers and MVVM 
-for the presentation layer.Conceptually, the architecture is as below:
+The app architecture is based on [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) for the domain and data layers and MVVM for the presentation layer. Conceptually, the architecture is as below:
 
 ![AppArch](readmeres/clean_architecture_onion.png)
 \
