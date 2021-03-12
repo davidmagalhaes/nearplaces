@@ -3,14 +3,13 @@
 An App project whose goal is to locate the user's nearest Cafes, Bars and Restaurants.
 
 ## Architecture
-The app uses a variation of Clean Architecture for the App's architecture, integrated with MVVM 
-for the presentation layer.
-Conceptually, the architecture is as follows:
+The app architecture is based on Clean Architecture for the domain and data layers and MVVM 
+for the presentation layer.Conceptually, the architecture is as below:
 
 ![AppArch](readmeres/clean_architecture_onion.png)
 \
 \
-When implemented, this architecture assumes the format of Clean Architecture on Android:
+#### On Android
 ![AppArchAndroid](readmeres/clean_architecture_impl.png)
 
 ## Setup Prerequisites
